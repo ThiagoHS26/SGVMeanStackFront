@@ -1,0 +1,174 @@
+<aside class="main-sidebar sidebar-dark-primary elevation-4">
+  <!-- Brand Logo -->
+  <a class="brand-link text-center">
+    <span style="font-weight: bold; font-size: 25px;" class="brand-text font-weight-light"><b>SYS</b>Motors</span>
+  </a>
+
+  <!-- Sidebar -->
+  <div class="sidebar">
+    <!-- Sidebar user (optional) -->
+    <div class="user-panel mt-3  mb-3 d-flex">
+      <div class="image" style="margin-top:13px;">
+        <img src="./assets/img/user_default.png" class="img-circle elevation-2" alt="User Image">
+      </div>
+      <div class="info">
+        <a [routerLink]="['/dashboard']" class="d-block">{{identity.usuario | uppercase}}
+          <small *ngIf="identity.role === 'ADMIN'" class="badge badge-info ml-2">{{identity.role | uppercase}}</small>
+          <small *ngIf="identity.role === 'SELLER'" class="badge badge-info ml-2">{{identity.role | uppercase}}</small>
+        </a>
+        <small style="font-size: 8px;" class="badge badge-success">online</small><br>
+        <small><p style="color: white;">Registrado desde {{identity.createAt | date: 'dd/MM/yyyy'}}</p></small>
+      </div>
+      
+    </div>
+
+    <!-- SidebarSearch Form -->
+    <div class="form-inline">
+      <div class="input-group" data-widget="sidebar-search">
+        <input class="form-control form-control-sidebar" type="search" placeholder="Search" aria-label="Search">
+        <div class="input-group-append">
+          <button class="btn btn-sidebar">
+            <i class="fas fa-search fa-fw"></i>
+          </button>
+        </div>
+      </div>
+    </div>
+
+    <!-- Sidebar Menu -->
+    <nav class="mt-2">
+      <ul class="nav nav-pills nav-sidebar flex-column" data-widget="treeview" role="menu" data-accordion="false">
+        <!-- Add icons to the links using the .nav-icon class
+            with font-awesome or any other icon font library -->
+        <li class="nav-item">
+              <a [routerLink]="['/dashboard']" class="nav-link">
+                <i class="nav-icon fas fa-tachometer-alt"></i>
+                <p>
+                  Dashboard
+                  <!--<span class="right badge badge-danger">New</span>-->
+                </p>
+              </a>
+        
+            </li>
+        <li class="nav-item">
+          <a class="nav-link" s>
+            <i class="nav-icon fas fa-cubes"></i>
+            <p>
+              Productos
+              <i class="right fas fa-angle-left"></i>
+            </p>
+          </a>
+          <ul class="nav nav-treeview">
+            <li class="nav-item">
+              <a [routerLink]="['/productos']" class="nav-link">
+                <i class="far fa-circle-check nav-icon"></i>
+                <p>Productos</p>
+              </a>
+            </li>
+          </ul>
+          <ul class="nav nav-treeview">
+            <li class="nav-item" *ngIf="identity.role == 'ADMIN'">
+              <a [routerLink]="['/categorias']" class="nav-link">
+                <i class="far fa-circle-check nav-icon"></i>
+                <p>Categorias</p>
+              </a>
+            </li>
+          </ul>
+        </li>
+
+        <li class="nav-item">
+          <a [routerLink]="['/usuarios']" class="nav-link" *ngIf="identity.role == 'ADMIN'">
+            <i class="nav-icon fas fa-users"></i>
+            <p>
+              Usuarios
+            </p>
+          </a>
+        </li>
+
+        <li class="nav-item">
+          <a [routerLink]="['/clientes']" class="nav-link">
+            <i class="nav-icon fas fa-user-tie"></i>
+            <p>
+              Clientes
+            </p>
+          </a>
+        </li>
+
+        <li class="nav-item">
+          <a [routerLink]="['/proveedores']" class="nav-link">
+            <i class="nav-icon fas fa-truck-fast"></i>
+            <p>
+              Proveedores
+            </p>
+          </a>
+        </li>
+
+        <li class="nav-item">
+          <a [routerLink]="['/compras']" class="nav-link">
+            <i class="nav-icon fas fa-cart-shopping"></i>
+            <p>
+              Compras
+            </p>
+          </a>
+        </li>
+
+        <li class="nav-item">
+          <a [routerLink]="['/ventas']" class="nav-link">
+            <i class="nav-icon fas fa-tags"></i>
+            <p>
+              Ventas
+            </p>
+          </a>
+        </li>      
+        
+        <!--Reportes de compras y ventas-->
+
+        <li class="nav-item">
+          <a class="nav-link" s>
+            <i class="nav-icon fas fa-arrow-trend-up"></i>
+            <p>
+              Reportes
+              <i class="right fas fa-angle-left"></i>
+            </p>
+          </a>
+          <ul class="nav nav-treeview">
+            <li class="nav-item">
+              <a [routerLink]="['/reporte-compras']" class="nav-link">
+                <i class="far fa-circle-check nav-icon"></i>
+                <p>Reporte de compras</p>
+              </a>
+            </li>
+          </ul>
+          <ul class="nav nav-treeview">
+            <li class="nav-item">
+              <a [routerLink]="['/reporte-ventas']" class="nav-link">
+                <i class="far fa-circle-check nav-icon"></i>
+                <p>Reporte de ventas</p>
+              </a>
+            </li>
+          </ul>
+        </li>
+        <!--
+        <li class="nav-item" *ngIf="identity.role == 'ADMIN'">
+          <a [routerLink]="['/configuraciones']" class="nav-link">
+            <i class="nav-icon fas fa-cog"></i>
+            <p>
+              Configuración
+            </p>
+          </a>
+        </li> -->
+
+        <li class="nav-item">
+          <a class="nav-link" (click)="logout()" style="cursor: pointer;">
+            <i class="nav-icon fas fa-arrow-left"></i>
+            <p>
+              Cerrar sesión
+            </p>
+          </a>
+        </li>
+
+      </ul>
+    </nav>
+    <!-- /.sidebar-menu -->
+  </div>
+  <!-- /.sidebar -->
+</aside>

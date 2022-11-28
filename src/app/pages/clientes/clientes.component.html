@@ -1,0 +1,185 @@
+<section class="content">
+    <div class="container-fluid">
+        <div class="row">
+            <div class="col-12">
+                <div class="card">
+                    <div class="card-header">
+                        <h3 class="card-title">Lista de Clientes</h3><br>
+                        <button type="button" class="btn btn-primary" data-toggle="modal" data-target="#agregarCliente">
+                            <i class="fas fa-user-plus"></i> Agregar
+                        </button>
+                    </div>
+                    <!-- /.card-header -->
+                    <div class="card-body">
+                        <table datatable [dtOptions]="dtOptions" [dtTrigger]="dtTrigger" class="row-border hover">
+                            <thead>
+                                <tr>
+                                    <th>#</th>
+                                    <th>Razón social</th>
+                                    <th>Nombres</th>
+                                    <th>Email</th>
+                                    <th>Dirección</th>
+                                    
+                                    <th>Acciones</th>
+                                </tr>
+                            </thead>
+                            <tbody>
+                                <tr *ngFor="let cliente of clientes; let i= index;">
+                                    <td>{{i+1}}</td>
+                                    <td>{{cliente.ci}}</td>
+                                    <td>{{cliente.nombres | uppercase}}</td>
+                                    <td>{{cliente.correo}}</td>
+                                    <td>{{cliente.direccion | uppercase}}</td>
+                                    
+                                    <td>
+                                        <button class="btn btn-warning btn-xs mr-2" (click)="llenarForm(cliente._id)"><i class="fas fa-pencil-alt"></i></button>
+                                        <button class="btn btn-danger btn-xs" (click)="eliminarCliente(cliente._id)"><i class="fas fa-trash-alt"></i></button>
+                                    </td>
+                                </tr>
+                            </tbody>
+                        </table>
+                        <button type="button" class="btn btn-secondary btn-xs mt-2" (click)="printReport()">
+                            <i class="fas fa-print"></i>
+                            Imprimir
+                        </button>
+                    </div>
+                </div>
+                <!-- /Modal Agregar Cliente -->
+                <div class="modal fade" id="agregarCliente">
+                    <div class="modal-dialog">
+                        <div class="modal-content">
+                            <div class="modal-header">
+                                <h4 class="modal-title">Agregar Cliente</h4>
+                                <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+                                    <span aria-hidden="true">&times;</span>
+                                </button>
+                            </div>
+                            <div class="modal-body">
+                            
+                                <form (ngSubmit)="crearClientes()" [formGroup]="registerClienteForm" autocomplete="off">
+                                    <small *ngIf="campoNoValido('ci')" class="text-danger">Completa este campo</small>
+                                    <div class="input-group mb-3 tool">
+                                        <input (input)="escribirDNI($event.target.value)" type="text" class="form-control" placeholder="Cédula" formControlName="ci">
+                                        <div class="input-group-append">
+                                            <div class="input-group-text">
+                                                <i #toogleDNI  class="fas fa-triangle-exclamation" style="color: rgb(48, 37, 37);"></i>
+                                            </div>
+                                        </div>
+                                        
+                                    </div>
+                                    
+                                    <small *ngIf="campoNoValido('nombres')" class="text-danger">Completa este campo</small>
+                                    <div class="input-group mb-3">
+                                        <input type="text" class="form-control" placeholder="Nombres" formControlName="nombres" [disabled]="isDisabled">
+                                        <div class="input-group-append">
+                                            <div class="input-group-text">
+                                                <span class="fas fa-check" style="color: rgb(48, 37, 37);"></span>
+                                            </div>
+                                        </div>
+                                    </div>
+                            
+                                    <small *ngIf="campoNoValido('correo')" class="text-danger">Completa este campo</small>
+                                    <div class="input-group mb-3">
+                                        <input type="email" class="form-control" placeholder="Correo electrónico" formControlName="correo" [disabled]="isDisabled">
+                                        <div class="input-group-append">
+                                            <div class="input-group-text">
+                                                <span class="fas fa-check" style="color: rgb(48, 37, 37);"></span>
+                                            </div>
+                                        </div>
+                                    </div>
+
+                                    <small *ngIf="campoNoValido('direccion')" class="text-danger">Completa este campo</small>
+                                    <div class="input-group mb-3">
+                                        <textarea class="form-control" placeholder="Dirección domiciliaria" formControlName="direccion" [disabled]="isDisabled"></textarea>
+                                        <div class="input-group-append">
+                                            <div class="input-group-text">
+                                                <span class="fas fa-check" style="color: rgb(48, 37, 37);"></span>
+                                            </div>
+                                        </div>
+                                    </div>
+                
+                                    <div class="row">
+                                        <div class="modal-footer justify-content-between">
+                                            <button type="button" class="btn btn-default" data-dismiss="modal">Cerrar</button>
+                                            <button [disabled]="isDisabled" type="submit" class="btn btn-primary">Guardar</button>
+                                        </div>
+                                    </div>
+                                </form>
+                            </div>
+    
+                        </div>
+                    </div>
+
+                </div>
+                <!--Modal agregar clientes-->
+
+                <!--Editar Cliente-->
+                <div class="modal fade" id="editarCliente">
+                    <div class="modal-dialog">
+                        <div class="modal-content">
+                            <div class="modal-header">
+                                <h4 class="modal-title">Editar Cliente</h4>
+                                <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+                                    <span aria-hidden="true">&times;</span>
+                                </button>
+                            </div>
+                            <div class="modal-body">
+                                <form (ngSubmit)="editarCliente()" [formGroup]="editClienteForm" autocomplete="off">
+                                    <small *ngIf="campoEditNoValido('ci')" class="text-danger">Completa este campo</small>
+                                    <div class="input-group mb-3">
+                                        <input type="text" class="form-control" placeholder="Cédula" formControlName="ci" readonly>
+                                        <div class="input-group-append">
+                                            <div class="input-group-text">
+                                                <span class="fas fa-check" style="color: rgb(48, 37, 37);"></span>
+                                            </div>
+                                        </div>
+                                    </div>
+                                    
+                                    <small *ngIf="campoEditNoValido('nombres')" class="text-danger">Completa este campo</small>
+                                    <div class="input-group mb-3">
+                                        <input type="text" class="form-control" placeholder="Nombres" formControlName="nombres">
+                                        <div class="input-group-append">
+                                            <div class="input-group-text">
+                                                <span class="fas fa-check" style="color: rgb(48, 37, 37);"></span>
+                                            </div>
+                                        </div>
+                                    </div>
+                            
+                                    <small *ngIf="campoEditNoValido('correo')" class="text-danger">Completa este campo</small>
+                                    <div class="input-group mb-3">
+                                        <input type="email" class="form-control" placeholder="Correo electrónico" formControlName="correo">
+                                        <div class="input-group-append">
+                                            <div class="input-group-text">
+                                                <span class="fas fa-check" style="color: rgb(48, 37, 37);"></span>
+                                            </div>
+                                        </div>
+                                    </div>
+
+                                    <small *ngIf="campoEditNoValido('direccion')" class="text-danger">Completa este campo</small>
+                                    <div class="input-group mb-3">
+                                        <textarea class="form-control" placeholder="Dirección domiciliaria" formControlName="direccion"></textarea>
+                                        <div class="input-group-append">
+                                            <div class="input-group-text">
+                                                <span class="fas fa-check" style="color: rgb(48, 37, 37);"></span>
+                                            </div>
+                                        </div>
+                                    </div>
+                
+                                    <div class="row">
+                                        <div class="modal-footer justify-content-between">
+                                            <button type="button" class="btn btn-default" data-dismiss="modal">Cerrar</button>
+                                            <button type="submit" class="btn btn-primary">Guardar</button>
+                                        </div>
+                                    </div>
+                                </form>
+                            </div>
+    
+                        </div>
+                    </div>
+
+                </div>
+                <!--Editar Cliente-->
+            </div>
+        </div>
+    </div>
+</section>

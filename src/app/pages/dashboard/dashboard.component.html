@@ -1,0 +1,177 @@
+<section class="content">
+    <div class="container-fluid">
+        <div class="row">
+            <div class="col-lg-3 col-6">
+                <!-- small card -->
+                <div class="small-box bg-info">
+                <div class="inner">
+                    <h3>$ {{total_ventas | number:'1.2-2'}}</h3>
+        
+                    <p>Total ventas</p>
+                </div>
+                <div class="icon">
+                    <i class="fas fa-tags"></i>
+                </div>
+                <a href="#" class="small-box-footer">
+                    <!--Más información <i class="fas fa-arrow-circle-right"></i>-->
+                </a>
+            </div>
+            </div>
+            <!-- ./col -->
+            <div class="col-lg-3 col-6">
+                <!-- small card -->
+                <div class="small-box bg-success">
+                <div class="inner">
+                    <h3>$ {{total_compras | number:'1.2-2'}}</h3>
+        
+                    <p>Total compras</p>
+                </div>
+                <div class="icon">
+                    <i class="fas fa-cart-shopping"></i>
+                </div>
+                <a href="#" class="small-box-footer">
+                    <!--Más información <i class="fas fa-arrow-circle-right"></i>-->
+                </a>
+            </div>
+            </div>
+            <!-- ./col -->
+            <div class="col-lg-3 col-6">
+                <!-- small card -->
+                <div class="small-box bg-warning">
+                    <div class="inner">
+                    <h3>{{inventario}}</h3>
+        
+                    <p>Inventario</p>
+                </div>
+                    <div class="icon">
+                    <i class="fas fa-cubes"></i>
+                </div>
+                <a href="#" class="small-box-footer">
+                    <!--Más información <i class="fas fa-arrow-circle-right"></i>-->
+                </a>
+            </div>
+            </div>
+            <!-- ./col -->
+            <div class="col-lg-3 col-6">
+                <!-- small card -->
+                <div class="small-box bg-danger">
+                    <div class="inner">
+                    <h3>{{total_clientes}}</h3>
+        
+                    <p>Clientes</p>
+                </div>
+                <div class="icon">
+                    <i class="fas fa-users"></i>
+                </div>
+                <a href="#" class="small-box-footer">
+                    <!--Más información <i class="fas fa-arrow-circle-right"></i>-->
+                </a>
+            </div>
+            </div>
+
+            <!-- ./col -->
+        </div>
+        <div class="row">
+            <div class="col-md-6">
+                <div class="card">
+                    <div class="card-header">
+                        <h3 class="card-title">Estado de productos</h3>
+                        <div class="card-tools">
+                            <button type="button" class="btn btn-tool" data-card-widget="collapse">
+                                <i class="fas fa-minus"></i>
+                            </button>
+                            <button type="button" class="btn btn-tool" data-card-widget="remove">
+                                <i class="fas fa-times"></i>
+                            </button>
+                        </div>
+                    </div>
+                    <!-- /.card-header -->
+                    <div class="card-body"style="overflow:scroll;height:250px;">
+                    <table class="table table-striped">
+                        <thead>
+                            <tr>
+                                <th style="width: 10px">#</th>
+                                <th>Código</th>
+                                <th>Artículo</th>
+                                <th>Stock</th>
+                                <th style="width: 40px">Estado</th>
+                            </tr>
+                        </thead>
+                        <tbody *ngFor="let item of productos;let i = index;">
+                            <tr>
+
+                                <td *ngIf="item.stock >=1 && item.stock <=5" class="font-weight-bolder">{{i+1}}</td>
+                                <td *ngIf="item.stock >=1 && item.stock <=5">{{item.codigo | uppercase}}</td>
+                                <td *ngIf="item.stock >=1 && item.stock <=5">{{item.titulo | uppercase}}</td>
+                                <td *ngIf="item.stock >=1 && item.stock <=5">{{item.stock}}</td>
+                                <td *ngIf="item.stock >=1 && item.stock <=5"><span class="badge bg-warning float-right">BAJO</span></td>
+
+                                <td *ngIf="item.stock == 0" class="font-weight-bolder">{{i+1}}</td>
+                                <td *ngIf="item.stock == 0 && item.stock <=5">{{item.codigo | uppercase}}</td>
+                                <td *ngIf="item.stock == 0">{{item.titulo | uppercase}}</td>
+                                <td *ngIf="item.stock == 0">{{item.stock}}</td>
+                                <td *ngIf="item.stock == 0"><span class="badge bg-danger float-right">AGOTADO</span></td>
+                            
+                                <td *ngIf="item.stock >9" class="font-weight-bolder">{{i+1}}</td>
+                                <td *ngIf="item.stock >9">{{item.codigo | uppercase}}</td>
+                                <td *ngIf="item.stock >9">{{item.titulo | uppercase}}</td>
+                                <td *ngIf="item.stock >9">{{item.stock}}</td>
+                                <td *ngIf="item.stock >9"><span class="badge bg-info float-right">EXCESO</span></td>
+                            </tr>
+                        </tbody>
+                    </table>
+                    </div>
+                    <!-- /.card-body -->
+                    <div class="card-footer text-center">
+                        <a [routerLink]="['/productos']" class="uppercase">Ver todos los productos</a>
+                    </div>
+                </div>
+            </div>
+
+            <div class="col-md-6">
+                <div class="card">
+                    <div class="card-header">
+                        <h3 class="card-title">Top productos más vendidos</h3>
+                        <div class="card-tools">
+                            <button type="button" class="btn btn-tool" data-card-widget="collapse">
+                                <i class="fas fa-minus"></i>
+                            </button>
+                            <button type="button" class="btn btn-tool" data-card-widget="remove">
+                                <i class="fas fa-times"></i>
+                            </button>
+                        </div>
+                    </div>
+                    <div class="card-body"style="overflow:scroll;height:250px;">
+                        <table class="table table-striped">
+                            <thead>
+                                <tr>
+                                    <th>#</th>
+                                    <th>Artículo</th>
+                                    <th>Precio</th>
+                                    <th>Ventas</th>
+                                    <th>Rank</th>
+                                </tr>
+                            </thead>
+                            <tbody *ngFor="let item of productoTop;let i = index;">
+                                <tr>
+                                    <td *ngIf="item.puntos >= 2">{{i+1}}</td>
+                                    <td *ngIf="item.puntos >= 2">{{item.titulo}}</td>
+                                    <td *ngIf="item.puntos >= 2">$ {{item.precio_venta}} USD</td>
+                                    <td *ngIf="item.puntos >= 2">$ {{item.puntos * item.precio_venta}} USD</td>
+                                    <td *ngIf="item.puntos >= 2"><span class="badge bg-success float-right">+2 ventas</span></td>
+                                </tr>
+                            </tbody>
+                        </table>
+                        </div>
+                        <!-- /.card-body -->
+                        <div class="card-footer text-center">
+                            <a [routerLink]="['/ventas']" class="uppercase">Ver todas las ventas</a>
+                        </div>
+                </div>
+                
+            </div>
+            
+        </div>
+    </div>
+</section>
+

@@ -1,0 +1,23 @@
+<div class="content">
+    <div class="container-fluid">
+        <div class="row">
+            <div class="col-12">
+                <div class="card ">
+                    <div class="card-header">
+                        <h3 class="card-title font-weight-bold">Recuperar contraseña</h3>
+                    </div>
+                    <div class="card-body">
+                        <div class="modal-body text-center">
+                            <small *ngIf="campoNoValido('email')" class="text-danger">Ingresa un correo eletrónico válido</small>
+                            <form (ngSubmit)="send_email()" [formGroup]="mailForm" autocomplete="off">
+                                <input type="email" class="form-control" placeholder="Ingresa un correo de recuperación" formControlName="email">
+                                <button type="submit" class="btn btn-primary mt-3 mb-3">Enviar</button>
+                            </form>
+                            <a [routerLink]="['/login']">Regresar al login</a>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+</div>

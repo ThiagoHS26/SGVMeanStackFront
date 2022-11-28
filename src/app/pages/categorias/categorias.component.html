@@ -1,0 +1,135 @@
+<section class="content">
+    <div class="container-fluid">
+        <div class="row">
+            <div class="col-12">
+                <div class="card">
+                    <div class="card-header">
+                        <h3 class="card-title">Lista de Categorías</h3><br>
+                        <button type="button" class="btn btn-primary" data-toggle="modal" data-target="#agregarCategoria">
+                            <i class="fas fa-user-plus"></i> Agregar
+                        </button>
+                    </div>
+                    <!-- /.card-header -->
+                    <div class="card-body">
+                        <table datatable [dtOptions]="dtOptions" [dtTrigger]="dtTrigger" class="row-border hover">
+                            <thead>
+                                <tr>
+                                    <th>#</th>
+                                    <th>Título</th>
+                                    <th>Descripción</th>
+                                    <th>Acciones</th>
+                                </tr>
+                            </thead>
+                            <tbody>
+                                <tr *ngFor="let categoria of categorias; let i= index;">
+                                    <td>{{i+1}}</td>
+                                    <td>{{categoria.titulo | uppercase}}</td>
+                                    <td>{{categoria.descripcion | uppercase}}</td>
+                                    <td>
+                                        <button class="btn btn-warning btn-xs mr-2" (click)="llenarFormulario(categoria._id)"><i class="fas fa-pencil-alt"></i></button>
+                                        <button class="btn btn-danger btn-xs" (click)="eliminarCategoria(categoria._id)"><i class="fas fa-trash-alt"></i></button>
+                                    </td>
+                                </tr>
+                            </tbody>
+                        </table>
+                    </div>
+                </div>
+                <!--Modal agregar categoria-->
+                <div class="modal fade" id="agregarCategoria">
+                    <div class="modal-dialog">
+                        <div class="modal-content">
+                            <div class="modal-header">
+                                <h4 class="modal-title">Agregar Categoría</h4>
+                                <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+                                    <span aria-hidden="true">&times;</span>
+                                </button>
+                            </div>
+                            <div class="modal-body">
+                                <form (ngSubmit)="crearCategoria()" [formGroup]="registerCategoriaForm" autocomplete="off">
+                                    <small *ngIf="campoNoValido('titulo')" class="text-danger">Completa este campo</small>
+                                    <div class="input-group mb-3">
+                                        <input type="text" class="form-control" placeholder="Título" formControlName="titulo">
+                                        <div class="input-group-append">
+                                            <div class="input-group-text">
+                                                <span class="fas fa-check" style="color: rgb(48, 37, 37);"></span>
+                                            </div>
+                                        </div>
+                                    </div>
+                                    
+                                    <small *ngIf="campoNoValido('descripcion')" class="text-danger">Completa este campo</small>
+                                    <div class="input-group mb-3">
+                                        <textarea type="text" class="form-control" placeholder="Breve descripción" formControlName="descripcion"></textarea>
+                                        <div class="input-group-append">
+                                            <div class="input-group-text">
+                                                <span class="fas fa-check" style="color: rgb(48, 37, 37);"></span>
+                                            </div>
+                                        </div>
+                                    </div>
+                            
+                
+                                    <div class="row">
+                                        <div class="modal-footer justify-content-between">
+                                            <button type="button" class="btn btn-default" data-dismiss="modal">Cerrar</button>
+                                            <button type="submit" class="btn btn-primary">Guardar</button>
+                                        </div>
+                                    </div>
+                                </form>
+                            </div>
+    
+                        </div>
+                    </div>
+
+                </div>
+                <!--Modal agregar categoria-->
+
+                <!--Modal editar categoria-->
+                <div class="modal fade" id="editarCategoria">
+                    <div class="modal-dialog">
+                        <div class="modal-content">
+                            <div class="modal-header">
+                                <h4 class="modal-title">Editar Categoría</h4>
+                                <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+                                    <span aria-hidden="true">&times;</span>
+                                </button>
+                            </div>
+                            <div class="modal-body">
+                                <form (ngSubmit)="editarCategoria()" [formGroup]="registerCategoriaForm" autocomplete="off">
+                                    <small *ngIf="campoNoValido('titulo')" class="text-danger">Completa este campo</small>
+                                    <div class="input-group mb-3">
+                                        <input type="text" class="form-control" placeholder="Título" formControlName="titulo">
+                                        <div class="input-group-append">
+                                            <div class="input-group-text">
+                                                <span class="fas fa-check" style="color: rgb(48, 37, 37);"></span>
+                                            </div>
+                                        </div>
+                                    </div>
+                                    
+                                    <small *ngIf="campoNoValido('descripcion')" class="text-danger">Completa este campo</small>
+                                    <div class="input-group mb-3">
+                                        <textarea type="text" class="form-control" placeholder="Breve descripción" formControlName="descripcion"></textarea>
+                                        <div class="input-group-append">
+                                            <div class="input-group-text">
+                                                <span class="fas fa-check" style="color: rgb(48, 37, 37);"></span>
+                                            </div>
+                                        </div>
+                                    </div>
+                            
+                
+                                    <div class="row">
+                                        <div class="modal-footer justify-content-between">
+                                            <button type="button" class="btn btn-default" data-dismiss="modal">Cerrar</button>
+                                            <button type="submit" class="btn btn-primary">Guardar</button>
+                                        </div>
+                                    </div>
+                                </form>
+                            </div>
+    
+                        </div>
+                    </div>
+
+                </div>
+                <!--Modal editar categoria-->
+            </div>
+        </div>
+    </div>
+</section>

@@ -1,0 +1,56 @@
+<div class="login-page">
+    <div class="login-box animate__animated animate__backInDown shadow p-3 mb-5 bg-white rounded">
+      <div class="card">
+
+        <div class="card-header text-center login-logo">
+          <b style="color: rgb(129, 2, 2);font-weight: bold;">SYS</b><strong>Motors</strong>
+        </div>
+        <div class="card-body">
+          <p class="login-box-msg font-weight-bold">Ingresa tus credenciales</p>
+          <form (ngSubmit)="login()" [formGroup]="loginForm" autocomplete="off">
+
+            <small *ngIf="campoNoValido('email')" class="text-danger">Ingresa un correo o usuario</small>
+            <div class="input-group mb-3">
+              <input type="email" class="form-control" placeholder="Correo o usuario" formControlName="email">
+              <div class="input-group-append">
+                <div class="input-group-text">
+                  <span class="fas fa-envelope"></span>
+                </div>
+              </div>
+            </div>
+
+            <small *ngIf="campoNoValido('password')" class="text-danger">Ingresa tu contraseña</small>
+            <div class="input-group mb-3">
+              <input type="password" class="form-control" placeholder="Contraseña" #password formControlName="password">
+              <div class="input-group-append">
+                <div class="input-group-text">
+                  <a style="cursor: pointer;" (click)="verPass()" >
+                    <i class="fas fa-eye-slash" #tooglePassword></i>
+                  </a>
+                </div>
+              </div>
+            </div>
+            <div class="row">
+              <div class="col-8">
+                <div class="icheck-primary">
+                  <input type="checkbox" id="remember" style="margin-right: 5px;" formControlName="remember">
+                  <label for="remember">
+                    Guardar sesión
+                  </label>
+                </div>
+              </div>
+              <!-- /.col -->
+              <div class="col-4">
+                <button type="submit" class="btn btn-primary btn-block">Ingresar</button>
+              </div>
+            </div>
+            <div class="row">
+              <div class="col-12">
+                <!--<a [routerLink]="['/forgot-pass']">Olvide mi contraseña</a>-->
+              </div>
+            </div>
+          </form>
+        </div>
+      </div>
+    </div>
+  </div>

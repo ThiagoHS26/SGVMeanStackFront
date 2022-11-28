@@ -1,0 +1,193 @@
+<div class="content">
+    <div class="container-fluid">
+        <div class="row">
+            <div class="col-md-12">
+                <div class="card card-primary">
+                    <div class="card-header">
+                        <h3 class="card-title">Datos de la venta</h3>
+                    </div>
+                    <div class="card-body">
+                        <form #ventaForm="ngForm" (ngSubmit)="onSubmit(ventaForm)">
+                            <div class="row">
+                                <div class="col-2">
+                                    <label for="">Fecha</label>
+                                    <input type="text" readonly class="form-control" value="{{fecha}}">
+                                </div>
+                                <div class="col-3">
+                                    <label for="">Usuario</label>
+                                    <input type="text" class="form-control" value="{{identity.nombres}} {{identity.apellidos}}" >
+                                </div>
+                                <div class="col-3">
+                                    <label for="">Cliente</label>
+                                    <select class="form-control" #idcliente="ngModel" name="idcliente" [(ngModel)]="venta.idcliente" required>
+                                        <option value="">SELECCIONAR</option>
+                                        <option value="{{item._id}}" *ngFor="let item of clientes">{{item.nombres}}</option>
+                                    </select>
+                                </div>
+                                <div class="col-2">
+                                    <label for="">Tipo de documento</label>
+                                    <select class="form-control" #tipo_documento="ngModel" name="tipo_documento" [(ngModel)]="venta.tipo_documento" required>
+                                        <option value="" disabled>SELECCIONAR</option>
+                                        <option value="Factura">Factura</option>
+                                        <option value="Nota_Venta">Nota de venta</option>
+                                    </select>
+                                </div>
+                                <div class="col-2">
+                                    <label for="">Número</label>
+                                    <input type="number" class="form-control" #factura="ngModel" name="factura" [(ngModel)]="venta.factura" required>
+                                </div>
+                                <div class="col-2 mt-3">
+                                    <button type="button" data-toggle="modal" data-target="#agregarCliente" class="btn btn-secondary">Nuevo cliente</button>
+                                </div>
+    
+                                <div class="col-2 mt-3">
+                                    <button type="submit" class="btn btn-primary">Registrar venta</button>
+                                </div>
+                            </div>
+                        </form>
+                    </div>
+                </div>
+                <!--Modal agregar cliente-->
+                <div class="modal fade" id="agregarCliente">
+                    <div class="modal-dialog">
+                        <div class="modal-content">
+                            <div class="modal-header">
+                                <h4 class="modal-title">Agregar Cliente</h4>
+                                <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+                                    <span aria-hidden="true">&times;</span>
+                                </button>
+                            </div>
+                            <div class="modal-body">
+                                <form (ngSubmit)="crearClientes()" [formGroup]="registerClienteForm" autocomplete="off">
+                                    <small *ngIf="campoNoValido('ci')" class="text-danger">Completa este campo</small>
+                                    <div class="input-group mb-3">
+                                        <input type="text" class="form-control" placeholder="DNI" formControlName="ci">
+                                        <div class="input-group-append">
+                                            <div class="input-group-text">
+                                                <span class="fas fa-user" style="color: rgb(48, 37, 37);"></span>
+                                            </div>
+                                        </div>
+                                    </div>
+                                    
+                                    <small *ngIf="campoNoValido('nombres')" class="text-danger">Completa este campo</small>
+                                    <div class="input-group mb-3">
+                                        <input type="text" class="form-control" placeholder="Full name" formControlName="nombres">
+                                        <div class="input-group-append">
+                                            <div class="input-group-text">
+                                                <span class="fas fa-user" style="color: rgb(48, 37, 37);"></span>
+                                            </div>
+                                        </div>
+                                    </div>
+                            
+                                    <small *ngIf="campoNoValido('correo')" class="text-danger">Completa este campo</small>
+                                    <div class="input-group mb-3">
+                                        <input type="email" class="form-control" placeholder="Email" formControlName="correo">
+                                        <div class="input-group-append">
+                                            <div class="input-group-text">
+                                                <span class="fas fa-envelope" style="color: rgb(48, 37, 37);"></span>
+                                            </div>
+                                        </div>
+                                    </div>
+                
+                                    <div class="row">
+                                        <div class="modal-footer justify-content-between">
+                                            <button type="button" class="btn btn-default" data-dismiss="modal">Cerrar</button>
+                                            <button type="submit" class="btn btn-primary">Guardar</button>
+                                        </div>
+                                    </div>
+                                </form>
+                            </div>
+    
+                        </div>
+                    </div>
+                </div>
+                <!--Modal agregar cliente-->
+            </div>
+        </div>
+    </div>
+</div>
+<div class="content">
+    <div class="container-fluid">
+        <div class="row">
+            <div class="col-md-5">
+                <div class="card card-primary">
+                    <div class="card-header">
+                        <h3 class="card-title">Detalles del producto</h3>
+                    </div>
+                    <form #detalleForm="ngForm" (ngSubmit)="save_detalle(detalleForm)">
+                        <div class="card-body">
+                            <div class="col-12">
+                                <label for="">Producto</label>
+                                <select #idproducto="ngModel" [(ngModel)]="detalle.idproducto" name="idproducto"  class="form-control" (change)="get_data_producto($event.target.value)" required>
+                                    <option value="" disabled>SELECCIONAR</option>
+                                    <option value="{{item._id}}" *ngFor="let item of productos" >{{item.titulo}}</option>
+                                </select>
+                            </div>
+                            <div class="col-12">
+                                <label for="">Stock actual</label>
+                                <input type="text" readonly class="form-control" value="{{producto.stock}}">
+                            </div>
+                            <div class="col-12 mt-3" *ngIf="error_message">
+                                <div class="alert alert-danger alert-dismissible" role="alert">
+                                    <div class="alert-message">
+                                        {{error_message}}
+                                    </div>
+                                    <button (click)="close_alert()" type="button" class="close" data-dismiss="alert" aria-label="Close">
+                                        <span aria-hidden="true" style="color: #ccc;">x</span>
+                                    </button>
+                                </div>
+                            </div>
+                            <div class="col-12">
+                                <label for="">Cantidad</label>
+                                <input #cantidad="ngModel" [(ngModel)]="detalle.cantidad" name="cantidad" type="number" class="form-control" required>
+                            </div>
+                            <div class="col-1 mt-3 mr-4 float-right">
+                                <button type="submit" class="btn btn-primary btn-sm">>></button>
+                            </div>
+                        </div>
+                    </form>
+                    
+                </div>
+            </div>
+            <!--Tabla de productos-->
+            <div class="col-md-7">
+                <div class="card card-primary">
+                    <div class="card-header">
+                        <h3 class="card-title">Listado de productos</h3>
+                    </div>
+                    <table class="table table-striped table-hover table-sm mt-3">
+                        <thead class="thead-ligth">
+                            <th class="text-center">Opción</th>
+                            <th>#</th>
+                            <th>Producto</th>
+                            <th>Precio</th>
+                            <th>Cantidad</th>
+                            <th>Subtotal</th>
+                        </thead>
+                        <tbody *ngFor="let item of data_detalle; let idx=index">
+                            <td class="text-center">
+                                <button (click)="eliminar(idx,item.precio_venta,item.cantidad)" class="btn btn-danger btn-sm">
+                                    <i class="fas fa-trash"></i>
+                                </button>
+                            </td>
+                            <td>{{idx+1}}</td>
+                            <td>{{item.producto}}</td>
+                            <td>{{item.precio_venta | number:'1.2-2'}}</td>
+                            <td>{{item.cantidad}}</td>
+                            <td>{{(item.precio_venta) * (item.cantidad) | number:'1.2-2'}}</td>
+                        </tbody>
+                        <tfoot>
+                            <td class="text-center btn-warning"><b>Total:</b></td>
+                            <td class="text-center">-</td>
+                            <td class="text-center">-</td>
+                            <td class="text-center">-</td>
+                            <td class="text-center">-</td>
+                            <td class="btn-warning">$ <b>{{total | number:'1.2-2'}}</b></td>
+                        </tfoot>
+                    </table>
+                </div>
+            </div>
+            
+        </div>
+    </div>
+</div>

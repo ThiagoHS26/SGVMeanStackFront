@@ -1,0 +1,54 @@
+
+<section class="content">
+    <div class="container-fluid">
+        <div class="row">
+            <div class="col-12">
+                <div class="card">
+                    <div class="card-body">
+                        <table datatable [dtOptions]="dtOptions" [dtTrigger]="dtTrigger" class="row-border hover">
+                            <thead>
+                                <tr>
+                                    <th>#</th>
+                                    <th>Fecha</th>
+                                    <th>Importe</th>
+                                    <th>Subtotal</th>
+                                    <th>Iva 12%</th>
+                                    <th>Descuento %</th>
+                                    <th>Total</th>
+                                </tr>
+                            </thead>
+                            <tbody>
+                                <tr *ngFor="let item of reporte_productos; let i= index;">
+                                    <td>{{i+1}}</td>
+                                    <td>{{item.fecha}}</td>
+                                    <td>{{item.total / 1.12 | number: '1.2-2'}}</td>
+                                    <td>{{item.total / 1.12 | number: '1.2-2'}}</td>
+                                    <td>{{item.total - item.total / 1.12 | number: '1.2-2'}}</td>
+                                    <td>0</td>
+                                    <td>{{item.total | number: '1.2-2'}}</td>
+                                </tr>
+                            </tbody>
+                            <!--
+                            <tfoot>
+                                <tr>
+                                    <td></td>
+                                    <td style="font-weight: bold;">TOTAL</td>
+                                    <td>{{total / 1.12 | currency}}</td>
+                                    <td>{{total / 1.12 | currency}}</td>
+                                    <td>{{total - total / 1.12 | currency}}</td>
+                                    <td>$0.00</td>
+                                    <td>{{total | currency}}</td>
+                                </tr>
+                            </tfoot>-->
+                        </table>
+                        <button type="button" class="btn btn-secondary btn-xs mt-2" (click)="printReport()">
+                            <i class="fas fa-print"></i>
+                            Imprimir
+                        </button>
+                    </div>
+                </div>
+    
+            </div>
+        </div>
+    </div>
+</section>
